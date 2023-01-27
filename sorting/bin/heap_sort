@@ -1,0 +1,47 @@
+class Heap {
+  List<int> _heap;
+
+  Heap(this._heap);
+
+  void _heapify(int index) {
+    int leftChildIndex = 2 * index + 1;
+    int rightChildIndex = 2 * index + 2;
+
+    int smallestIndex = index;
+    if (leftChildIndex < _heap.length && _heap[leftChildIndex] < _heap[smallestIndex]) {
+      smallestIndex = leftChildIndex;
+    }
+    if (rightChildIndex < _heap.length && _heap[rightChildIndex] < _heap[smallestIndex]) {
+      smallestIndex = rightChildIndex;
+    }
+    if (smallestIndex != index) {
+      _swap(index, smallestIndex);
+      _heapify(smallestIndex);
+    }
+  }
+
+
+  void _buildHeap() {
+    for (int i = (_heap.length / 2).floor(); i >= 0; i--) {
+      _heapify(i);
+    }
+  }
+
+  void sort() {
+    _buildHeap();
+    for (int i = _heap.length - 1; i > 0; i--) {
+      _swap(0, i);
+      _heap.removeLast();
+      _heapify(0);
+    }
+  }
+
+  void _swap(int index1, int index2) {
+    int temp = _heap[index1];
+    _heap[index1] = _heap[index2];
+    _heap[index2] = temp;
+  }
+}
+
+
+
